@@ -4268,16 +4268,6 @@ file-loader@^6.2.0:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
 
-file-saver@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/file-saver/-/file-saver-2.0.5.tgz#d61cfe2ce059f414d899e9dd6d4107ee25670c38"
-  integrity sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==
-
-file@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/file/-/file-0.2.2.tgz#c3dfd8f8cf3535ae455c2b423c2e52635d76b4d3"
-  integrity sha1-w9/Y+M81Na5FXCtCPC5SY112tNM=
-
 filelist@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/filelist/-/filelist-1.0.2.tgz#80202f21462d4d1c2e214119b1807c1bc0380e5b"
@@ -7559,11 +7549,6 @@ sass-loader@^12.3.0:
   dependencies:
     klona "^2.0.4"
     neo-async "^2.6.2"
-
-saver@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/saver/-/saver-0.1.1.tgz#ab212b9d1d9336d420d7cbfe34be3501a23c5518"
-  integrity sha512-ghReZGO9VTSmCf077dPVB6kVBKQwHcI2hkCrwFempjKJejvJ1SlktrO2cwm9UOFLfPYD6JMFeMnGtihetPA/ww==
 
 sax@~1.2.4:
   version "1.2.4"

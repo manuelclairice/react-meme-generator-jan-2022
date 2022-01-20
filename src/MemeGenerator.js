@@ -1,157 +1,148 @@
+import './App.css';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { saveAs } from 'file-saver';
 import React, { useEffect, useState } from 'react';
-import Button from './ButtonMemeGenerator';
 import Input from './InputMemeGenerator';
 
 function App() {
-  // create useState
-  const [memeData, setMemeData] = useState([]);
-  const [topText, setTopText] = useState('CODING');
-  const [bottomText, setBottomText] = useState('MYSTERY');
-  const [imageStyle, setImageStyle] = useState('aag');
+  const [data, setData] = useState([]);
+  const [topText, setTopText] = useState('');
+  const [bottomText, setBottomText] = useState('');
+  const [styleImage, setStyleImage] = useState('ams');
   const [customUrl, setCustomUrl] = useState(
-    'https://api.memegen.link/images/aag/coding/mystery.png',
+    'https://api.memegen.link/images/ams/Hello/my friends.png',
   );
-  // Fetch data from then memegen website
+
+  // Fetch template
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://api.memegen.link/templates');
+        const response = await fetch('https://api.memegen.link/templates/');
         const json = await response.json();
-        setMemeData(json);
-      } catch (error) {
-        console.log(error);
+        setData(json);
+      } catch (e) {
+        console.error(e);
       }
     };
-    fetchData();
-  }, [])
+    fetchData().catch((err) => {
+      console.error(err);
+    });
+  }, []);
 
-    // eventhandler
-    const onModifyTopText = (event) => {
-      setTopText(event.currentTarget.value);
-    };
-    const onModifyBottomText = (event) => {
-      setBottomText(event.currentTarget.value);
-    };
-    const onChangeImageStyle = (event) => {
-      setImageStyle(event.currentTarget.value);
-    };
+  // Functionality to download custom meme
+  function forceDownload(blob, filename) {
+    // Create an invisible anchor element
+    const anchor = document.createElement('a');
+    anchor.style.display = 'none';
+    anchor.href = window.URL.createObjectURL(blob);
+    anchor.setAttribute('download', filename);
+    document.body.appendChild(anchor);
 
-    // change the ? \ / # " - _ for the url
-    const modifiedTopText = topText
-      .replace(/\?/g, '~q')
-      .replace(/%/g, '~p')
-      .replace(/\//g, '~s')
-      .replace(/#/g, '~h')
-      .replace(/"/g, "''")
-      .replace(/_/g, '__')
-      .replace(/-/g, '--');
+    // Trigger the download by simulating click
+    anchor.click();
 
-    const modifiedBottomText = bottomText
-      .replace(/\?/g, '~q')
-      .replace(/%/g, '~p')
-      .replace(/\//g, '~s')
-      .replace(/#/g, '~h')
-      .replace(/"/g, "''")
-      .replace(/_/g, '__')
-      .replace(/-/g, '--');
+    // Clean up
+    window.URL.revokeObjectURL(anchor.href);
+    document.body.removeChild(anchor);
+  }
+  function downloadResource(URL, filename) {
+    // If no filename is set, use filename from URL
+    if (!filename) filename = URL.match(/\/([^/#?]+)[^/]*$/)[1];
+    fetch(URL, {
+      headers: new Headers({
+        Origin: window.location.origin,
+      }),
+      mode: 'cors',
+    })
+      .then((response) => response.blob())
+      .then((blob) => forceDownload(blob, filename))
+      .catch((e) => console.error(e));
+  }
 
-    // on Generate Click function
-    const onGenerateClick = () => {
-      setCustomUrl(
-        `https://api.memegen.link/images/${imageStyle}/${modifiedTopText}/${modifiedBottomText}.jpg`,
-      );
-    };
+  return (
+    <main>
+      <section>
+        <h1>Random meme Generator</h1>
 
-    // on Download Click funtion
-    const onDownloadClick = () => {
-      saveAs(customUrl, `${imageStyle}-${topText}-${bottomText}.jpg`);
-    };
-
-    // on Clear Click function
-    const onClearClick = () => {
-      setBottomText('');
-      setTopText('');
-    };
-
-    // CSS in JS
-    const memeImage = css`
-      display: block;
-      width: 50%;
-      margin-right: auto;
-      margin-left: auto;
-      @media (max-width: 600px) {
-        width: 90vw;
-      }
-    `;
-
-    const buttonDiv = css`
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      @media (max-width: 600px) {
-        display: block;
-        margin: auto;
-        width: 50%;
-      }
-    `;
-
-    const optionInput = css`
-      display: flex;
-      flex-direction: column;
-      font-size: 20px;
-      margin: 10px;
-    `;
-
-    return (
-      <div>
         <Input
-          htmlFor="topText"
-          text="text on top"
+          text="Top text: "
           type="text"
           id="topText"
           placeholder="Top text"
           value={topText}
-          onChange={onModifyTopText}
+          onChange={(event) => {
+            setTopText(event.currentTarget.value);
+          }}
         />
+
         <Input
-          htmlFor="bottomText"
-          text="text on bottom"
+          text="Bottom text: "
           type="text"
           id="bottomText"
           placeholder="Bottom text"
           value={bottomText}
-          onChange={onModifyBottomText}
+          onChange={(event) => {
+            setBottomText(event.currentTarget.value);
+          }}
         />
-        {/* Dropdown menu for the memes  */}
-        <div css={optionInput}>
-          <label htmlFor="imageStyle">Enter your image style: </label>
+
+        <input
+          text="Meme template :"
+          placeholder="Type here..."
+          id="styleImage"
+          value={styleImage}
+          onChange={(event) => {
+            setStyleImage(event.currentTarget.value);
+          }}
+        />
+
+        {/* <div className="inputArea">
+
+          <button htmlFor="styleImage">Image style: </button>
+          <div
           <select
-            css={dropdownMenu}
-            id="imageStyle"
-            placeholder="your meme"
-            value={imageStyle}
-            onChange={onChangeImageStyle}
+            id="styleImage"
+            placeholder="buzz"
+            value={styleImage}
+            onChange={(event) => {
+              setStyleImage(event.currentTarget.value);
+            }}
           >
-            {memeData.map((item) => (
+            {data.map((item) => (
               <option value={item.id} key={item.id}>
                 {item.name}
               </option>
             ))}
           </select>
-        </div>
-        <div css={buttonDiv}>
-          <Button click={onGenerateClick}>GENERATE</Button>
-          <Button click={onDownloadClick}>DOWNLOAD</Button>
-          <Button click={onClearClick}>CLEAR</Button>
-        </div>
+        </div> */}
+
         <div>
-          <img css={memeImage} src={customUrl} alt="Meme" />
+          <button
+            onClick={() => {
+              setCustomUrl(
+                `https://api.memegen.link/images/${styleImage}/${topText}/${bottomText}.jpg`,
+              );
+            }}
+          >
+            Preview meme
+          </button>
+          <button
+            onClick={() => {
+              downloadResource(
+                `https://api.memegen.link/images/${styleImage}/${topText}/${bottomText}.jpg`,
+              );
+            }}
+          >
+            Download meme
+          </button>
         </div>
-      </div>
-    );
-  ;
+
+        <div>
+          <img className="memeImg" src={customUrl} alt="Custom meme" />
+        </div>
+      </section>
+    </main>
+  );
+}
 
 export default App;
