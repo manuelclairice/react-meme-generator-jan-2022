@@ -1,6 +1,6 @@
 import './App.css';
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+// /** @jsxImportSource @emotion/react */
+// // import { css } from '@emotion/react';
 import React, { useEffect, useState } from 'react';
 import Input from './InputMemeGenerator';
 
@@ -8,9 +8,9 @@ function App() {
   const [data, setData] = useState([]);
   const [topText, setTopText] = useState('');
   const [bottomText, setBottomText] = useState('');
-  const [styleImage, setStyleImage] = useState('ams');
+  const [styleImage, setStyleImage] = useState('');
   const [customUrl, setCustomUrl] = useState(
-    'https://api.memegen.link/images/ams/Hello/my friends.png',
+    'https://api.memegen.link/images/ds.png',
   );
 
   // Fetch template
@@ -86,7 +86,7 @@ function App() {
           }}
         />
 
-        <input
+        <Input
           text="Meme template :"
           placeholder="Type here..."
           id="styleImage"
@@ -96,7 +96,7 @@ function App() {
           }}
         />
 
-        {/* <div className="inputArea">
+        {/*
 
           <button htmlFor="styleImage">Image style: </button>
           <div
@@ -133,7 +133,7 @@ function App() {
               );
             }}
           >
-            Download meme
+            Download
           </button>
         </div>
 
