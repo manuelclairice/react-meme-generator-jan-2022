@@ -13,7 +13,7 @@ function App() {
     'https://api.memegen.link/images/ds.png',
   );
 
-  // Fetch template
+  // FETCHING THE MEME TEMPLATE USING THE API
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,24 +29,24 @@ function App() {
     });
   }, []);
 
-  // Functionality to download custom meme
+  // THE DOWNLOADING FUNCTION
   function forceDownload(blob, filename) {
-    // Create an invisible anchor element
+    // CREATE AN INVISIBLE ANCHOR ELEMENT
     const anchor = document.createElement('a');
     anchor.style.display = 'none';
     anchor.href = window.URL.createObjectURL(blob);
     anchor.setAttribute('download', filename);
     document.body.appendChild(anchor);
 
-    // Trigger the download by simulating click
+    // TRIGGER THE DOWNLOAD
     anchor.click();
 
-    // Clean up
+    // DOES THE CLEAN UP
     window.URL.revokeObjectURL(anchor.href);
     document.body.removeChild(anchor);
   }
   function downloadResource(URL, filename) {
-    // If no filename is set, use filename from URL
+    // WHEN A FILE NAME IS NOT SET, USE THE FILE NAME OF THE URL
     if (!filename) filename = URL.match(/\/([^/#?]+)[^/]*$/)[1];
     fetch(URL, {
       headers: new Headers({
