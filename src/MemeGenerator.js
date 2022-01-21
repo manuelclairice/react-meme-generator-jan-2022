@@ -136,7 +136,7 @@ function App() {
         </div>
 
         <div>
-          <img className="memeImg" src={customUrl} alt="Custom meme" />
+          <img data-test-id="meme-image" src={customUrl} alt="Custom meme" />
         </div>
       </section>
     </main>
