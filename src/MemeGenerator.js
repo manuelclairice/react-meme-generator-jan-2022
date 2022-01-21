@@ -8,7 +8,7 @@ function App() {
   const [data, setData] = useState([]);
   const [topText, setTopText] = useState('');
   const [bottomText, setBottomText] = useState('');
-  const [styleImage, setStyleImage] = useState('');
+  const [previewImage, setPreviewImage] = useState('');
   const [customUrl, setCustomUrl] = useState(
     'https://api.memegen.link/images/ds.png',
   );
@@ -89,25 +89,23 @@ function App() {
         <Input
           text="Meme template :"
           placeholder="Type here..."
-          id="styleImage"
-          value={styleImage}
+          id="previewImage"
+          value={previewImage}
           onChange={(event) => {
-            setStyleImage(event.currentTarget.value);
+            setPreviewImage(event.currentTarget.value);
           }}
         />
 
-        {/*
-
-          <button htmlFor="styleImage">Image style: </button>
+        {/* <button htmlFor="previewImage">Image style: </button>
           <div
           <select
-            id="styleImage"
+            id="previewImage"
             placeholder="buzz"
-            value={styleImage}
+            value={previewImage}
             onChange={(event) => {
-              setStyleImage(event.currentTarget.value);
-            }}
-          >
+              setPreviewImage(event.currentTarget.value);
+            }} */}
+        {/* >
             {data.map((item) => (
               <option value={item.id} key={item.id}>
                 {item.name}
@@ -120,7 +118,7 @@ function App() {
           <button
             onClick={() => {
               setCustomUrl(
-                `https://api.memegen.link/images/${styleImage}/${topText}/${bottomText}.jpg`,
+                `https://api.memegen.link/images/${previewImage}/${topText}/${bottomText}.jpg`,
               );
             }}
           >
@@ -129,7 +127,7 @@ function App() {
           <button
             onClick={() => {
               downloadResource(
-                `https://api.memegen.link/images/${styleImage}/${topText}/${bottomText}.jpg`,
+                `https://api.memegen.link/images/${previewImage}/${topText}/${bottomText}.jpg`,
               );
             }}
           >
