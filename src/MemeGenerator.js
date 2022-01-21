@@ -56,7 +56,7 @@ function App() {
     })
       .then((response) => response.blob())
       .then((blob) => forceDownload(blob, filename))
-      .catch((e) => console.error(e));
+      .catch((event) => console.error(event));
   }
 
   return (
@@ -96,23 +96,23 @@ function App() {
           }}
         />
 
-        {/* <button htmlFor="previewImage">Image style: </button>
-          <div
+        <div className="inputArea">
+          <label htmlFor="previewImage">Meme template: </label>
           <select
             id="previewImage"
             placeholder="buzz"
             value={previewImage}
             onChange={(event) => {
               setPreviewImage(event.currentTarget.value);
-            }} */}
-        {/* >
+            }}
+          >
             {data.map((item) => (
               <option value={item.id} key={item.id}>
                 {item.name}
               </option>
             ))}
           </select>
-        </div> */}
+        </div>
 
         <div>
           <button
